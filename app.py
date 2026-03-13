@@ -21,6 +21,29 @@ This project is an **IPL Win Predictor**, where I cleaned the dataset, trained a
 
 I’m sharing this project to **document my learning journey and improve my ML skills** 🚀
 """)
+
+import random
+
+st.markdown("### 🎮 Mini Game: Guess the Number (1 - 10)")
+
+# Generate random number
+if "number" not in st.session_state:
+    st.session_state.number = random.randint(1,10)
+
+guess = st.number_input("Enter your guess",1,10)
+
+if st.button("Check Guess"):
+    
+    if guess == st.session_state.number:
+        st.success("🎉 Correct! You guessed it!")
+        st.session_state.number = random.randint(1,10)
+        
+    elif guess > st.session_state.number:
+        st.warning("Too High ⬆️")
+        
+    else:
+        st.warning("Too Low ⬇️")
+
 # Load dataset
 df = pd.read_csv("IPL_processed_dataset.csv")
 
