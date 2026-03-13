@@ -1,24 +1,52 @@
 import streamlit as st
-import pickle
 import pandas as pd
 
-# Load trained model
-model = pickle.load(open("ipl_win_predictor.pkl","rb"))
+from sklearn.model_selection import train_test_split
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.ensemble import RandomForestClassifier
 
-st.title("IPL Win Predictor")
+st.title("🏏 IPL Win Predictor")
 
+# Load dataset
+df = pd.read_csv("IPL_processed_dataset.csv")
+
+# Features
+X = df.drop(columns=['result'])
+y = df['result']
+
+categorical_cols = ['batting_team','bowling_team','city']
+
+transformer = ColumnTransformer(
+    transformers=[
+        ('encoder', OneHotEncoder(), categorical_cols)
+    ],
+    remainder='passthrough'
+)
+
+model = RandomForestClassifier()
+
+pipe = Pipeline(steps=[
+    ('step1', transformer),
+    ('step2', model)
+])
+
+pipe.fit(X,y)
+
+# UI
 batting_team = st.selectbox(
 "Batting Team",
 ['Chennai Super Kings','Mumbai Indians','Royal Challengers Bengaluru',
- 'Kolkata Knight Riders','Delhi Capitals','Punjab Kings',
- 'Rajasthan Royals','Sunrisers Hyderabad']
+'Kolkata Knight Riders','Delhi Capitals','Punjab Kings',
+'Rajasthan Royals','Sunrisers Hyderabad']
 )
 
 bowling_team = st.selectbox(
 "Bowling Team",
 ['Chennai Super Kings','Mumbai Indians','Royal Challengers Bengaluru',
- 'Kolkata Knight Riders','Delhi Capitals','Punjab Kings',
- 'Rajasthan Royals','Sunrisers Hyderabad']
+'Kolkata Knight Riders','Delhi Capitals','Punjab Kings',
+'Rajasthan Royals','Sunrisers Hyderabad']
 )
 
 city = st.selectbox(
@@ -28,7 +56,7 @@ city = st.selectbox(
 
 runs_left = st.number_input("Runs Left")
 balls_left = st.number_input("Balls Left")
-wickets = st.number_input("Wickets Left")
+wickets = st.number_input("Wickets Left",0,10)
 runs_target = st.number_input("Target")
 crr = st.number_input("Current Run Rate")
 rrr = st.number_input("Required Run Rate")
@@ -47,9 +75,9 @@ if st.button("Predict Winner"):
         'rrr':[rrr]
     })
 
-    result = model.predict(input_df)
+    result = pipe.predict(input_df)
 
     if result[0] == 1:
-        st.success(f"{batting_team} will win 🏏")
+        st.success(f"{batting_team} will win 🏆")
     else:
-        st.error(f"{bowling_team} will win 🏏")
+        st.error(f"{bowling_team} will win 🏆")
