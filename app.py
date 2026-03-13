@@ -8,7 +8,7 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.ensemble import RandomForestClassifier
 
 st.title("🏏 IPL Win Predictor")
-st.write("App loaded successfully")
+st.write("App loaging successfully plzz wait guys for 2-3 min ")
 
 # Load dataset
 df = pd.read_csv("IPL_processed_dataset.csv")
