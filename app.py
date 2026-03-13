@@ -8,15 +8,18 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.ensemble import RandomForestClassifier
 
 st.title("🏏 IPL Win Predictor")
-st.write("App loaging successfully plzz wait guys for 2-3 min ")
 st.markdown("""
-### About Me
+### ⏳ App is loading... please wait a minute!
+
+While the model loads, **get to know me** 👇
 
 Hi, I’m **Harshal Kapale** 👋, currently a **2nd semester student** exploring **Data Science and Machine Learning**.
 
-This project is an **IPL Win Predictor** where I cleaned the dataset, trained a **machine learning model**, and built an interactive web app.
+I’m learning tools like **Python, NumPy, Pandas, Matplotlib, Seaborn, Plotly Express, Kaggle, and Git/GitHub**.
 
-I'm learning **Python, NumPy, Pandas, Matplotlib, Seaborn, Plotly, Kaggle, and Git/GitHub**.
+This project is an **IPL Win Predictor**, where I cleaned the dataset, trained a **machine learning model**, and built this interactive web app.
+
+I’m sharing this project to **document my learning journey and improve my ML skills** 🚀
 """)
 # Load dataset
 df = pd.read_csv("IPL_processed_dataset.csv")
